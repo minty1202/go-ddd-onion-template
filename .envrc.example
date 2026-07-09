@@ -1,0 +1,5 @@
+# このファイルをコピーして .envrc を作成し、`direnv allow .` を実行する
+# cp .envrc.example .envrc
+# direnv allow .
+
+export APP_ENV=development

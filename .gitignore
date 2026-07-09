@@ -1,0 +1,28 @@
+# 環境変数
+.envrc
+.env
+.env.local
+
+# ビルド出力
+bin/
+tmp/
+
+# 自動生成（buf generate の出力）
+gen/
+
+# テストカバレッジ
+coverage.out
+coverage.html
+
+# Go
+vendor/
+
+# macOS
+.DS_Store
+
+# エディタ / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

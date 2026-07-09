@@ -1,0 +1,10 @@
+dir: mocks/{{.SrcPackageName}}
+pkgname: mock{{.SrcPackageName}}
+filename: mock_{{.InterfaceName}}.go
+template: testify
+template-data:
+  unroll-variadic: true
+packages:
+  github.com/minty1202/go-ddd-onion-template/internal/domain/todo:
+    interfaces:
+      Repository: {}

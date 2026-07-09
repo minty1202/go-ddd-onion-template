@@ -1,0 +1,34 @@
+version: "2"
+
+linters:
+  enable:
+    - exhaustive
+    - forbidigo
+  settings:
+    exhaustive:
+      # default ケースがあっても全ケースの網羅を要求する
+      default-signifies-exhaustive: false
+    forbidigo:
+      forbid:
+        # SyncVersion は Repository 実装からの version 同期専用。
+        # usecase / presentation から呼ぶと楽観ロックの不変条件を壊す可能性がある。
+        - pattern: '\.SyncVersion\b'
+          msg: "SyncVersion は Repository 実装のみが呼ぶ。usecase / presentation 層からは呼ばないこと"
+        # Reconstruct / ReconstructLock は永続化からの復元専用。
+        # usecase / presentation から呼ぶと業務ルール検証をバイパスして集約を生成できてしまう。
+        - pattern: '\.Reconstruct(Lock)?\b'
+          msg: "Reconstruct / ReconstructLock は Repository 実装のみが呼ぶ。usecase / presentation 層からは呼ばないこと"
+  exclusions:
+    rules:
+      # Repository 実装本体は SyncVersion / Reconstruct を呼んでよい
+      - path: internal/infra/repository/
+        linters:
+          - forbidigo
+      # ドメイン層自身（自己テスト含む）も呼んでよい
+      - path: internal/domain/
+        linters:
+          - forbidigo
+      # テストでは内部状態を意図的に組み立てる必要があるため一律除外
+      - path: _test\.go$
+        linters:
+          - forbidigo
